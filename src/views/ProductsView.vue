@@ -3,10 +3,12 @@
      <ProductPreview v-for="v in products" :key="v.id" :product="v" @addToCart="addToCart"></ProductPreview>
   </div>
 </template>
+
 <script lang="ts">
 import { storeToRefs } from 'pinia'
 import { defineComponent, onMounted, ref } from 'vue'
 import { customAxios } from '@/services/customAxios'
+
 import { useCartStore } from '@/stores/cart'
 import type { ICartItem } from '@/interfaces'
 import ProductPreview from "@/components/ProductPreview.vue"

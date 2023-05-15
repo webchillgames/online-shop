@@ -14,10 +14,10 @@
       </CLink>
 
       <div class="s-header__links">
-        <CLink link="bookmark" icon="bookmark"></CLink>
+        <CLink link="/" icon="bookmark"></CLink>
         <div class="s-header__cart">
           <CLink link="cart" icon="bag"></CLink>
-          <span v-if="itemsQuantity && itemsQuantity < 90">{{ itemsQuantity }}</span>
+          <span v-if="itemsQuantity < 90">{{ itemsQuantity }}</span>
           <span v-if="itemsQuantity > 90">90+</span>
         </div>
       </div>

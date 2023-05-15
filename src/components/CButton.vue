@@ -2,6 +2,7 @@
   <button type="button" class="c-button">
     <span v-if="title">{{ title }}</span>
     <CIcon v-if="icon" :icon="icon" />
+    <slot></slot>
   </button>
 </template>
 

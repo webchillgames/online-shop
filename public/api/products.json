@@ -1,6 +1,116 @@
 {
     "products": [
-        { "id": 1, "title": "Софа", "price": 1000 }
-
+        {
+            "budge": {
+                "color": "#85b839",
+                "title": "new"
+            },
+            "characteristics": [
+                "Vestibulum tortor quam",
+                "Imported",
+                "Art.No. 06-7680"
+            ],
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "id": 1,
+            "image": {
+                "middleSize": "./images/product-item-1.jpg"
+            },
+            "isAvailable": true,
+            "price": {
+                "actual": 45,
+                "old": 65
+            },
+            "reviews": 3,
+            "stars": 5,
+            "title": "Plastic Dining Chair"
+        },
+        {
+            "budge": {
+                "color": "#85b839",
+                "title": "new"
+            },
+            "characteristics": [
+                "Vestibulum tortor quam",
+                "Imported",
+                "Art.No. 06-7680"
+            ],
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "id": 1,
+            "image": {
+                "middleSize": "./images/product-item-2.jpg"
+            },
+            "isAvailable": true,
+            "price": {
+                "actual": 45,
+                "old": 65
+            },
+            "reviews": 7,
+            "stars": 4,
+            "title": "Plastic Dining Chair"
+        },
+        {
+            "budge": {
+                "color": "#85b839",
+                "title": "new"
+            },
+            "characteristics": [
+                "Vestibulum tortor quam",
+                "Imported",
+                "Art.No. 06-7680"
+            ],
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "id": 1,
+            "image": {
+                "middleSize": "./images/product-item-3.jpg"
+            },
+            "isAvailable": true,
+            "price": {
+                "actual": 45,
+                "old": 65
+            },
+            "reviews": 10,
+            "stars": 5,
+            "title": "Plastic Dining Chair"
+        },
+        {
+            "budge": {
+                "color": "#85b839",
+                "title": "new"
+            },
+            "characteristics": [
+                "Vestibulum tortor quam",
+                "Imported",
+                "Art.No. 06-7680"
+            ],
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "id": 1,
+            "image": {
+                "middleSize": "./images/product-item-4.jpg"
+            },
+            "isAvailable": true,
+            "price": {
+                "actual": 45,
+                "old": 65
+            },
+            "reviews": 9,
+            "stars": 3,
+            "title": "Plastic Dining Chair"
+        }
     ]
 }
