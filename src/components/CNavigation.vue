@@ -4,18 +4,23 @@
       <nav>
         <ul class="c-navigation__links">
           <li class="c-navigation__all-categories">
-            <CButton>
+            <CButton @click="categoriesIsShow = !categoriesIsShow">
               <CIcon icon="bars" />
               <span>{{ $t('allCategories') }}</span>
             </CButton>
-
-            <ul v-if="categoriesLinks.length" class="c-navigation__submenu c-navigation__submenu--categories">
-              <li v-for="c in categoriesLinks" :key="c.id">
-                <router-link :to="c.to">
-                  <span>{{ c.title }}</span>
-                </router-link>
-              </li>
-            </ul>
+            <Transition name="fade">
+              <ul
+                v-if="categoriesLinks.length && categoriesIsShow"
+                class="c-navigation__submenu c-navigation__submenu--categories"
+                :class="{ active: categoriesIsShow, close: !categoriesIsShow }"
+              >
+                <li v-for="c in categoriesLinks" :key="c.id">
+                  <router-link :to="c.to">
+                    <span>{{ c.title }}</span>
+                  </router-link>
+                </li>
+              </ul>
+            </Transition>
           </li>
 
           <li v-for="v in navElements" :key="v.link.id" class="c-navigation__submenu-trigger">
@@ -39,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import CButton from '@/components/CButton.vue'
@@ -48,6 +53,7 @@ import CIcon from '@/components/CIcon.vue'
 export default defineComponent({
   components: { CIcon, CButton },
   setup() {
+    const categoriesIsShow = ref(false)
     const { t } = useI18n()
 
     const navElements = [
@@ -78,11 +84,13 @@ export default defineComponent({
       { id: 1, title: t('chairs'), to: '/' },
       { id: 2, title: t('lightning'), to: '/' },
       { id: 3, title: t('mirrors'), to: '/' },
-      { id: 4, title: t('tables'), to: '/' }
+      { id: 4, title: t('tables'), to: '/' },
+      { id: 5, title: t('all'), to: '/products' },
     ]
     return {
       categoriesLinks,
-      navElements
+      navElements,
+      categoriesIsShow
     }
   }
 })
@@ -93,10 +101,8 @@ export default defineComponent({
   background-color: $dark-bg;
 
   &__links {
-    padding: 0;
     display: flex;
     margin: 0;
-    list-style: none;
     position: relative;
 
     li {
@@ -174,6 +180,7 @@ export default defineComponent({
     min-width: 175px;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden;
 
     a {
       transition: all 0.2s;
@@ -184,6 +191,8 @@ export default defineComponent({
   }
 
   .c-navigation__submenu--categories {
+    display: block;
+
     a {
       display: block;
       text-align: center;
@@ -232,6 +241,7 @@ export default defineComponent({
 
 @keyframes showMenu {
   0% {
+    display: none;
     opacity: 0;
     transform: translate3d(0, 10%, 0);
   }

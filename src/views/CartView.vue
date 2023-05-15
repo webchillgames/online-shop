@@ -1,37 +1,40 @@
 <template>
   <div class="cart-view">
-    <div v-if="items.length">
-      <div class="cart-view__table">
-        <div v-for="v in items" :key="v.id" class="cart-view__item">
-          <div class="cart-view__cell">
-            <p>{{ v.title }}</p>
-          </div>
-          <div class="cart-view__cell">
-            <div class="cart-view__quantity">
-              <CButton title="+"></CButton>
-              <p>1</p>
-              <CButton title="-"></CButton>
+    <div class="wrapper">
+      <div v-if="items.length">
+        <div class="cart-view__table">
+          <div v-for="v in items" :key="v.id" class="cart-view__item">
+            <div class="cart-view__cell">
+              <CImage :image="v.image" />
+              <p>{{ v.title }}</p>
+            </div>
+            <div class="cart-view__cell">
+              <div class="cart-view__quantity">
+                <CButton title="+"></CButton>
+                <p>1</p>
+                <CButton title="-"></CButton>
+              </div>
+            </div>
+
+            <div class="cart-view__cell">
+              <p>{{ v.price.actual }}</p>
+            </div>
+            <div class="cart-view__cell">
+              <CButton class="cart-view__remove" icon="trash" @click="removeItem(v.id)"></CButton>
             </div>
           </div>
+        </div>
 
-          <div class="cart-view__cell">
-            <p>{{ v.price }}</p>
-          </div>
-          <div class="cart-view__cell">
-            <CButton class="cart-view__remove" icon="trash" @click="removeItem(v.id)"></CButton>
-          </div>
+        <div class="cart-view__summary">
+          <p>{{ summaryPrice }}</p>
+          <button>Оплатить</button>
         </div>
       </div>
 
-      <div class="cart-view__summary">
-        <p>{{ summaryPrice }}</p>
-        <button>Оплатить</button>
+      <div v-else>
+        <p>Корзина пуста</p>
+        <CLink link="/products" title="К покупкам" />
       </div>
-    </div>
-
-    <div v-else>
-      <p>Корзина пуста</p>
-      <CLink link="/products" title="К покупкам" />
     </div>
   </div>
 </template>
@@ -42,12 +45,13 @@ import { useCartStore } from '../stores/cart'
 import CButton from '@/components/CButton.vue'
 import CLink from '@/components/CLink.vue'
 import { storeToRefs } from 'pinia'
+import CImage from '@/components/CImage.vue'
 
 export default defineComponent({
-  components: { CButton, CLink },
+  components: { CButton, CLink, CImage },
   setup() {
     const cartStore = useCartStore()
-    const { items } = storeToRefs(cartStore) 
+    const { items } = storeToRefs(cartStore)
     const { remove } = cartStore
     const summaryPrice = ref(0)
 
@@ -55,7 +59,7 @@ export default defineComponent({
       let result: number = 0
 
       items.value.forEach((v) => {
-        result += v.price
+        result += v.price.actual
       })
 
       return result

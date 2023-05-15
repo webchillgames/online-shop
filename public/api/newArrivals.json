@@ -1,0 +1,100 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "image": "./images/product-item-1.jpg",
+            "isAvailable": true,
+            "price": {
+                "rub": {
+                    "actual": 145,
+                    "old": 165
+                },
+                "eur": {
+                    "actual": 45,
+                    "old": 65
+                }
+            },
+            "reviews": 3,
+            "stars": 5,
+            "title": "Plastic Dining Chair",
+            "budge": "new"
+        },
+        {
+            "id": 2,
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "image": "./images/product-item-2.jpg",
+            "isAvailable": true,
+            "price": {
+                "rub": {
+                    "actual": 145,
+                    "old": 165
+                },
+                "eur": {
+                    "actual": 45,
+                    "old": 65
+                }
+            },
+            "reviews": 3,
+            "stars": 5,
+            "title": "Plastic Dining Chair",
+            "budge": "new"
+        },
+        {
+            "budge": "new",
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "id": 1,
+            "image": "./images/product-item-3.jpg",
+            "isAvailable": true,
+            "price": {
+                "eur": {
+                    "actual": 45,
+                    "old": 65
+                },
+                "rub": {
+                    "actual": 145,
+                    "old": 165
+                }
+            },
+            "reviews": 3,
+            "stars": 5,
+            "title": "Lightning"
+        },
+        {
+            "budge": "new",
+            "colors": [
+                "black",
+                "grey",
+                "brown"
+            ],
+            "id": 2,
+            "image": "./images/product-item-4.jpg",
+            "isAvailable": true,
+            "price": {
+                "eur": {
+                    "actual": 45,
+                    "old": 65
+                },
+                "rub": {
+                    "actual": 145,
+                    "old": 165
+                }
+            },
+            "reviews": 3,
+            "stars": 5,
+            "title": "Table lightning"
+        }
+    ]
+}

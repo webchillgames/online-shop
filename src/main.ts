@@ -6,7 +6,7 @@ import { createI18n } from 'vue-i18n'
 import { messages } from './translator/messages'
 
 const i18n = createI18n({
-  locale: 'ru',
+  locale: 'en',
   fallbackLocale: 'en',
   messages,
   legacy: false,

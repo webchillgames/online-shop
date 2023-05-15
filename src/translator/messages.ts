@@ -8,7 +8,10 @@ export const messages = {
     tables: 'tables',
     mirrors: 'mirrors',
     lightning: 'lightning',
-    ProductsFilters: 'product\'s filters'
+    newArrivals: 'new arrivals',
+    all: 'all',
+    categories: 'categories',
+    color: 'color',
   },
   ru: {
     allCategories: 'все категории',
@@ -19,6 +22,9 @@ export const messages = {
     tables: 'столы',
     mirrors: 'зеркала',
     lightning: 'свет',
-    ProductsFilters: 'Фильтры продуктов'
+    newArrivals: 'новинки',
+    all: 'все',
+    categories: 'категории',
+    color: 'цвет',
   }
 }

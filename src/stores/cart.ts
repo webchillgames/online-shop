@@ -9,7 +9,7 @@ export const useCartStore = defineStore('cart', {
     summaryPrice: (state) => {
       let result: number = 0
       state.items.forEach(v => {
-        result += v.price
+        result += v.price.actual
       })
 
       return result

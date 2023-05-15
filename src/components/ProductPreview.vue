@@ -1,18 +1,18 @@
 <template>
   <div class="product-preview">
+
     <div class="product-preview__top">
       <div
         v-if="product.budge"
         class="product-preview__budge"
-        :style="{ 'background-color': `${product.budge.color}` }"
       >
-        <span> {{ product.budge.title }}</span>
+        <span> {{ product.budge }}</span>
       </div>
 
       <CButton icon="heart" class="product-preview__heart"></CButton>
     </div>
 
-    <CImage :image="product.image.middleSize" />
+    <CImage :image="product.image" />
 
     <h4>{{ product.title }}</h4>
 
@@ -30,8 +30,8 @@
     </div>
 
     <div class="product-preview__price">
-      <p v-if="product.price.old" class="product-preview__old-price">{{ product.price.old }}</p>
-      <p>{{ product.price.actual }}</p>
+      <p v-if="product.price[current].old " class="product-preview__old-price">{{ product.price[current].old }}</p>
+      <p>{{product.price[current].actual }}</p>
     </div>
 
     <CButton
@@ -47,7 +47,8 @@ import { defineComponent } from 'vue'
 import CButton from '@/components/CButton.vue'
 import CImage from './CImage.vue'
 import CIcon from './CIcon.vue'
-
+import { useLocalizationStore } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: { CButton, CImage, CIcon },
   emits: ['addToCart'],
@@ -58,7 +59,11 @@ export default defineComponent({
     }
   },
   setup() {
-    return {}
+    const localizationStore = useLocalizationStore()
+    const {current} = storeToRefs(localizationStore)
+    return {
+      current
+    }
   }
 })
 </script>
@@ -67,7 +72,6 @@ export default defineComponent({
 .product-preview {
   background-color: $bg;
   border: 1px solid $border;
-  max-width: 270px;
   border-radius: 8px;
   padding: 20px;
   box-sizing: border-box;
@@ -150,13 +154,17 @@ export default defineComponent({
     border-radius: 30px;
     border: 1px solid $primary;
     background-color: #fff;
-    height: 42px;
     line-height: 38px;
     padding: 0 19px;
     text-transform: uppercase;
     font-weight: 700;
     margin: 0 auto;
     @include flexCenter;
+  }
+
+  @media (max-width: 768px) {
+    max-width: none;
+    width: 100%;
   }
 }
 </style>

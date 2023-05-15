@@ -3,14 +3,17 @@
     <CNavigation />
 
     <div class="wrapper">
-      <div class="home-view__products">
-        <ProductPreview
-          v-for="v in products"
-          :key="v.id"
-          :product="v"
-          @addToCart="addToCart"
-        ></ProductPreview>
-      </div>
+      <section>
+        <h2>{{ $t('newArrivals') }}</h2>
+        <div class="home-view__products">
+          <ProductPreview
+            v-for="v in products"
+            :key="v.id"
+            :product="v"
+            @addToCart="addToCart"
+          ></ProductPreview>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -32,9 +35,10 @@ export default defineComponent({
     const { items } = storeToRefs(cartRouter)
     const { add } = cartRouter
 
-    async function getProducts() {
+    async function getNewArrivals() {
       try {
-        const r = await customAxios.get()
+        const r = await customAxios.get('api/newArrivals.json')
+        
         return r.data.products
       } catch (e) {
         console.log(e)
@@ -46,7 +50,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      products.value = await getProducts()
+      products.value = await getNewArrivals()
     })
 
     return {
@@ -66,9 +70,16 @@ export default defineComponent({
   row-gap: 40px;
 
   &__products {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 30px;
+    @include productsGrid;
+  }
+
+  section {
+    text-align: center;
+
+    h2 {
+      text-transform: capitalize;
+      margin-bottom: 40px 0;
+    }
   }
 }
 </style>
