@@ -1,6 +1,7 @@
 {
-    "chairs": [
+    "products": [
         {
+            "type": "chairs",
             "id": 1,
             "colors": [
                 "black",
@@ -25,6 +26,7 @@
             "budge": "new"
         },
         {
+            "type": "chairs",
             "id": 2,
             "colors": [
                 "black",

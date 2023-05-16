@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/${link}`" class="c-link">
+  <router-link :to="`${link}`" class="c-link">
     <span v-if="title">{{ title }}</span>
     <CIcon v-if="icon" :icon="icon" />
     <slot></slot>

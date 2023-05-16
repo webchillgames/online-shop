@@ -10,18 +10,20 @@
     </div>
     <div class="wrapper s-header__content">
       <CLink link="/">
-        <CImage image="shop-logo.png" />
+        <CImage image="/shop-logo.png" />
       </CLink>
 
       <div class="s-header__links">
         <CLink link="/" icon="bookmark"></CLink>
         <div class="s-header__cart">
-          <CLink link="cart" icon="bag"></CLink>
+          <CLink link="/cart" icon="bag"></CLink>
           <span v-if="itemsQuantity < 90">{{ itemsQuantity }}</span>
           <span v-if="itemsQuantity > 90">90+</span>
         </div>
       </div>
     </div>
+
+    <CNavigation />
   </header>
 </template>
 
@@ -32,9 +34,10 @@ import { useCartStore } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
 import CButton from './CButton.vue'
 import CImage from './CImage.vue'
+import CNavigation from '@/components/CNavigation.vue'
 
 export default defineComponent({
-  components: { CLink, CButton, CImage },
+  components: { CLink, CButton, CImage, CNavigation },
   setup() {
     const cartStore = useCartStore()
     const { itemsQuantity } = storeToRefs(cartStore)

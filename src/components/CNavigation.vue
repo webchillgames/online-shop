@@ -23,15 +23,15 @@
             </Transition>
           </li>
 
-          <li v-for="v in navElements" :key="v.link.id" class="c-navigation__submenu-trigger">
-            <router-link :to="v.link.to">
-              <span>{{ v.link.title }}</span>
+          <li v-for="v in categories" :key="v.main.id" class="c-navigation__submenu-trigger">
+            <router-link :to="`/category/${v.main.to}`">
+              <span>{{ v.main.title }}</span>
               <CIcon icon="arrow" />
             </router-link>
 
             <ul v-if="v.submenu.length" class="c-navigation__submenu">
               <li v-for="j in v.submenu" :key="j.id">
-                <router-link :to="v.link.to">
+                <router-link :to="`/category/${v.main.to}/${j.to}`">
                   <span>{{ j.title }}</span>
                 </router-link>
               </li>
@@ -49,6 +49,7 @@ import { useI18n } from 'vue-i18n'
 
 import CButton from '@/components/CButton.vue'
 import CIcon from '@/components/CIcon.vue'
+import { categories } from '@/categories'
 
 export default defineComponent({
   components: { CIcon, CButton },
@@ -56,40 +57,14 @@ export default defineComponent({
     const categoriesIsShow = ref(false)
     const { t } = useI18n()
 
-    const navElements = [
-      {
-        link: { id: 1, title: t('home'), to: '/' },
-        submenu: [
-          { id: 1, title: t('chairs'), to: '/' },
-          { id: 2, title: t('lightning'), to: '/' }
-        ]
-      },
-      {
-        link: { id: 2, title: t('kitchen'), to: '/' },
-        submenu: [
-          { id: 1, title: t('tables'), to: '/' },
-          { id: 2, title: t('chairs'), to: '/' }
-        ]
-      },
-      {
-        link: { id: 3, title: t('bathroom'), to: '/' },
-        submenu: [
-          { id: 1, title: t('mirrors'), to: '/' },
-          { id: 2, title: t('lightning'), to: '/' }
-        ]
-      }
-    ]
-
     const categoriesLinks = [
-      { id: 1, title: t('chairs'), to: '/' },
-      { id: 2, title: t('lightning'), to: '/' },
-      { id: 3, title: t('mirrors'), to: '/' },
-      { id: 4, title: t('tables'), to: '/' },
-      { id: 5, title: t('all'), to: '/products' },
+      { id: 1, title: t('home'), to: '/category/home' },
+      { id: 2, title: t('kitchen'), to: '/category/kitchen' },
+      { id: 3, title: t('bathroom'), to: '/category/bathroom' },
     ]
     return {
       categoriesLinks,
-      navElements,
+      categories,
       categoriesIsShow
     }
   }

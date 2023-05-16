@@ -12,7 +12,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/products',
+      path: '/category/:name/:subcategory?',
       component: ProductsView
     },
     {

@@ -2,38 +2,20 @@
   <div class="products-view">
     <div class="wrapper">
       <div class="products-view__filters">
-        <!-- <div>
-          <p>{{ $t('categories') }}</p>
-          <ul v-if="filters && filters.categories">
-            <li
-              v-for="category in filters.categories"
-              :key="category.id"
-              class="products-view__checkbox"
-            >
-              <input type="checkbox" :id="category.value" v-model="" />
-              <label :for="category.value">{{ category.title }}</label>
-            </li>
-          </ul>
-        </div> -->
-
-        <!-- <div>
-          <p>{{ $t('color') }}</p>
-          <ul v-if="filters && filters.colors">
-            <li v-for="color in filters.colors" :key="color.id">
-              <input type="checkbox" :id="color.value" />
-              <label :for="color.value">{{ color.value }}</label>
-            </li>
-          </ul>
-        </div> -->
+        <CFilters :categories="currentSubcategories" />
       </div>
-      <div class="products-view__products">
-        <ProductPreview
-          v-for="v in products"
-          :key="v.id"
-          :product="v"
-          @addToCart="addToCart"
-          class="products-view__product"
-        ></ProductPreview>
+      <div class="products-view__content">
+        <h2 v-if="$route.params.subcategory">{{ $t(`${$route.params.subcategory}`) }}</h2>
+        <h2 v-else>{{ $t(`${$route.params.name}`) }}</h2>
+        <div class="products-view__products">
+          <ProductPreview
+            v-for="v in products"
+            :key="v.id"
+            :product="v"
+            @addToCart="addToCart"
+            class="products-view__product"
+          ></ProductPreview>
+        </div>
       </div>
     </div>
   </div>
@@ -41,49 +23,55 @@
 
 <script lang="ts">
 import { storeToRefs } from 'pinia'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import { customAxios } from '@/services/customAxios'
 
 import { useCartStore } from '@/stores/cart'
-import type { ICartItem } from '@/interfaces'
+import type { ICartItem, IFilterCategory } from '@/interfaces'
 import ProductPreview from '@/components/ProductPreview.vue'
-import { useLocalizationStore } from '@/stores/localization'
+
+import CFilters from '@/components/CFilters.vue'
+import { categories } from '@/categories'
+import { useRoute } from 'vue-router'
+
 export default defineComponent({
-  components: { ProductPreview },
+  components: { ProductPreview, CFilters },
   setup() {
     const products = ref<ICartItem[]>([])
     const cartRouter = useCartStore()
     const { items } = storeToRefs(cartRouter)
     const { add } = cartRouter
-    const localizationStore = useLocalizationStore()
-    const { language, current } = storeToRefs(localizationStore)
-    const filters = ref()
-    const priceRange = ref()
-    // const currentFilters = ref<string[]>([])
+    const route = useRoute()
+    const currentSubcategories = ref<IFilterCategory[]>([])
 
-    async function getProducts() {
-      try {
-        const r = await customAxios.get('/api/products.json')
-        return r.data.products
-      } catch (e) {
-        console.log(e)
-      }
+    const category = categories.filter((v) => v.main.to === route.params.name)[0]
+
+    function setSubcategories(): IFilterCategory[] | [] {
+      return route.params.subcategory ? [] : category.submenu
     }
 
-    async function getFilters() {
-      try {
-        const r = await customAxios.get(`/api/filters.json`)
-        return r.data.filters[language.value]
-      } catch (e) {
-        console.log(e)
+    async function getAllProducts() {
+      let result: ICartItem[] = []
+
+      if (!route.params.subcategory) {
+        for (let item of category.submenu) {
+          const r = await getProducts(item.to)
+          const products = r?.data.products
+          result = [...result, ...products]
+        }
+      } else {
+        const r = await getProducts(`${route.params.subcategory}`)
+        const products = r?.data.products
+        result = [...result, ...products]
       }
+
+      return result
     }
 
-    async function getPriceRange() {
+    async function getProducts(path: string) {
       try {
-        const r = await customAxios.get(`/api/filters.json`)
-
-        return r.data.filters.priceRange[current.value]
+        const r = await customAxios.get(`/api/${path}.json`)
+        return r
       } catch (e) {
         console.log(e)
       }
@@ -93,49 +81,24 @@ export default defineComponent({
       add(item)
     }
 
-    // function toggleCurrentFilters(e: Event) {
-    //   const event = e.target as HTMLElement
-    //   const parent = event?.parentElement
-
-    //   if (parent?.nodeName === 'LI') {
-    //     const typeOfFilter: string = parent.getAttribute('filterType')
-    //     const value: string = parent.getAttribute('filterValue')
-    //     console.log(typeOfFilter, value)
-
-    //     // if (typeOfFilter && value) {
-    //     if (
-    //       currentFilters.value.filter((v) => v === typeOfFilter).length ||
-    //       currentFilters.value.filter((v) => v === value).length
-    //     ) {
-    //       return
-    //     }
-
-    //     if (!currentFilters.value.filter((v) => v === typeOfFilter).length) {
-    //       currentFilters.value.push(typeOfFilter)
-    //     }
-
-    //     if (!currentFilters.value.filter((v) => v === value).length) {
-    //       currentFilters.value.push(value)
-    //     }
-
-    //     console.log(currentFilters.value)
-    //     // }
-    //   }
-    // }
+    watch(
+      () => route.params,
+      async () => {
+        currentSubcategories.value = setSubcategories()
+        products.value = await getAllProducts()
+      }
+    )
 
     onMounted(async () => {
-      products.value = await getProducts()
-      filters.value = await getFilters()
-      priceRange.value = await getPriceRange()
+      currentSubcategories.value = setSubcategories()
+      products.value = await getAllProducts()
     })
 
     return {
       products,
       addToCart,
       items,
-      filters,
-      priceRange,
-      // toggleCurrentFilters
+      currentSubcategories
     }
   }
 })
@@ -143,8 +106,18 @@ export default defineComponent({
 
 <style lang="scss">
 .products-view {
+  h2 {
+    text-transform: capitalize;
+  }
+
   .wrapper {
-    display: flex;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-gap: 30px;
+  }
+
+  &__content {
   }
 
   &__products {

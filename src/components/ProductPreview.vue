@@ -30,7 +30,7 @@
     </div>
 
     <div class="product-preview__price">
-      <p v-if="product.price[current].old " class="product-preview__old-price">{{ product.price[current].old }}</p>
+      <p :v-if="product.price[current].old " class="product-preview__old-price">{{ product.price[current].old }}</p>
       <p>{{product.price[current].actual }}</p>
     </div>
 
@@ -61,6 +61,7 @@ export default defineComponent({
   setup() {
     const localizationStore = useLocalizationStore()
     const {current} = storeToRefs(localizationStore)
+
     return {
       current
     }

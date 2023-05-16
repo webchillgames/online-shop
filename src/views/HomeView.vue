@@ -1,7 +1,5 @@
 <template>
   <div class="home-view">
-    <CNavigation />
-
     <div class="wrapper">
       <section>
         <h2>{{ $t('newArrivals') }}</h2>
@@ -19,7 +17,6 @@
 </template>
 
 <script lang="ts">
-import CNavigation from '@/components/CNavigation.vue'
 import { defineComponent, onMounted, ref } from 'vue'
 
 import { useCartStore } from '@/stores/cart'
@@ -59,7 +56,7 @@ export default defineComponent({
       items
     }
   },
-  components: { CNavigation, ProductPreview }
+  components: { ProductPreview }
 })
 </script>
 
