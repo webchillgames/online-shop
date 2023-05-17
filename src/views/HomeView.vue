@@ -20,14 +20,14 @@
 import { defineComponent, onMounted, ref } from 'vue'
 
 import { useCartStore } from '@/stores/cart'
-import type { ICartItem } from '@/interfaces'
+import type { IProduct } from '@/interfaces'
 import ProductPreview from '@/components/ProductPreview.vue'
 import { customAxios } from '@/services/customAxios'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   setup() {
-    const products = ref<ICartItem[]>([])
+    const products = ref<IProduct[]>([])
     const cartRouter = useCartStore()
     const { items } = storeToRefs(cartRouter)
     const { add } = cartRouter
@@ -42,7 +42,7 @@ export default defineComponent({
       }
     }
 
-    function addToCart(item: ICartItem) {
+    function addToCart(item: IProduct) {
       add(item)
     }
 

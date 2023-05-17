@@ -1,4 +1,4 @@
-export interface ICartItem {
+export interface IProduct {
   id: number
   title: string
   image: string
@@ -26,10 +26,15 @@ export interface IFilterColor {
   value: string
 }
 
-export interface IFilterCategory {
+export interface ILink {
   id: number
-  to: string
   title: string
+  to: string
+}
+
+export interface ICategory {
+  category: ILink
+  subcategories: ILink[]
 }
 
 // export interface IPriceRange {

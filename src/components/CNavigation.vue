@@ -23,15 +23,15 @@
             </Transition>
           </li>
 
-          <li v-for="v in categories" :key="v.main.id" class="c-navigation__submenu-trigger">
-            <router-link :to="`/category/${v.main.to}`">
-              <span>{{ v.main.title }}</span>
+          <li v-for="v in categories" :key="v.category.id" class="c-navigation__submenu-trigger">
+            <router-link :to="`/category/${v.category.to}`">
+              <span>{{ v.category.title }}</span>
               <CIcon icon="arrow" />
             </router-link>
 
-            <ul v-if="v.submenu.length" class="c-navigation__submenu">
-              <li v-for="j in v.submenu" :key="j.id">
-                <router-link :to="`/category/${v.main.to}/${j.to}`">
+            <ul v-if="v.subcategories.length" class="c-navigation__submenu">
+              <li v-for="j in v.subcategories" :key="j.id">
+                <router-link :to="`/category/${v.category.to}/${j.to}`">
                   <span>{{ j.title }}</span>
                 </router-link>
               </li>

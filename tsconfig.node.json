@@ -5,6 +5,7 @@
       "node"
     ]
   },
+  "esModuleInterop": true,
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": [
     "vite.config.*",

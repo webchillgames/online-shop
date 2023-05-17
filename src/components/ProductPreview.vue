@@ -1,11 +1,7 @@
 <template>
   <div class="product-preview">
-
     <div class="product-preview__top">
-      <div
-        v-if="product.budge"
-        class="product-preview__budge"
-      >
+      <div v-if="product.budge" class="product-preview__budge">
         <span> {{ product.budge }}</span>
       </div>
 
@@ -30,8 +26,8 @@
     </div>
 
     <div class="product-preview__price">
-      <p :v-if="product.price[current].old " class="product-preview__old-price">{{ product.price[current].old }}</p>
-      <p>{{product.price[current].actual }}</p>
+      <p v-if="product.price.old" class="product-preview__old-price">{{ product.price.old }}</p>
+      <p>{{ product.price.actual }}</p>
     </div>
 
     <CButton
@@ -43,24 +39,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
+import { useLocalizationStore } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+import type { IProduct } from '@/interfaces'
+
 import CButton from '@/components/CButton.vue'
 import CImage from './CImage.vue'
 import CIcon from './CIcon.vue'
-import { useLocalizationStore } from '@/stores/localization'
-import { storeToRefs } from 'pinia'
+
 export default defineComponent({
   components: { CButton, CImage, CIcon },
   emits: ['addToCart'],
   props: {
     product: {
-      type: Object,
+      type: Object as PropType<IProduct>,
       required: true
     }
   },
   setup() {
     const localizationStore = useLocalizationStore()
-    const {current} = storeToRefs(localizationStore)
+    const { current } = storeToRefs(localizationStore)
 
     return {
       current

@@ -32,3 +32,10 @@
         grid-template-columns: 100%;
     }
 }
+
+@mixin baseLink {
+    text-decoration: none;
+    color: $font;
+    cursor: pointer;
+    transition: all 0.2s;
+}

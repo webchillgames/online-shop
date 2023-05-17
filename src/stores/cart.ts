@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import type { ICartItem } from '../interfaces'
+import type { IProduct } from '../interfaces'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    items: <ICartItem[]>[]
+    items: <IProduct[]>[]
   }),
   getters: {
     summaryPrice: (state) => {

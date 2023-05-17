@@ -2,103 +2,68 @@
   <div class="products-view">
     <div class="wrapper">
       <div class="products-view__filters">
-        <CFilters :categories="currentSubcategories" />
+        <CFilters v-if="currentSubcategories" :subcategories="currentSubcategories" :category="currentCategory" />
       </div>
-      <div class="products-view__content">
-        <h2 v-if="$route.params.subcategory">{{ $t(`${$route.params.subcategory}`) }}</h2>
-        <h2 v-else>{{ $t(`${$route.params.name}`) }}</h2>
-        <div class="products-view__products">
-          <ProductPreview
-            v-for="v in products"
-            :key="v.id"
-            :product="v"
-            @addToCart="addToCart"
-            class="products-view__product"
-          ></ProductPreview>
-        </div>
+
+      <div class="products-view__products">
+        <ProductPreview
+          v-for="v in products"
+          :key="v.id"
+          :product="v"
+          @addToCart="addToCart"
+          class="products-view__product"
+        ></ProductPreview>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { storeToRefs } from 'pinia'
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { customAxios } from '@/services/customAxios'
-
-import { useCartStore } from '@/stores/cart'
-import type { ICartItem, IFilterCategory } from '@/interfaces'
-import ProductPreview from '@/components/ProductPreview.vue'
-
-import CFilters from '@/components/CFilters.vue'
 import { categories } from '@/categories'
 import { useRoute } from 'vue-router'
+import { useCartStore } from '@/stores/cart'
+import type { IProduct, ICategory } from '@/interfaces'
+
+import ProductPreview from '@/components/ProductPreview.vue'
+import CFilters from '@/components/CFilters.vue'
 
 export default defineComponent({
   components: { ProductPreview, CFilters },
   setup() {
-    const products = ref<ICartItem[]>([])
-    const cartRouter = useCartStore()
-    const { items } = storeToRefs(cartRouter)
-    const { add } = cartRouter
     const route = useRoute()
-    const currentSubcategories = ref<IFilterCategory[]>([])
+    const products = ref<IProduct[]>([])
 
-    const category = categories.filter((v) => v.main.to === route.params.name)[0]
+    const cartStore = useCartStore()
+    const { add } = cartStore
 
-    function setSubcategories(): IFilterCategory[] | [] {
-      return route.params.subcategory ? [] : category.submenu
-    }
+    const currentCategory = ref<ICategory>()
 
-    async function getAllProducts() {
-      let result: ICartItem[] = []
-
-      if (!route.params.subcategory) {
-        for (let item of category.submenu) {
-          const r = await getProducts(item.to)
-          const products = r?.data.products
-          result = [...result, ...products]
-        }
-      } else {
-        const r = await getProducts(`${route.params.subcategory}`)
-        const products = r?.data.products
-        result = [...result, ...products]
-      }
-
-      return result
-    }
-
-    async function getProducts(path: string) {
-      try {
-        const r = await customAxios.get(`/api/${path}.json`)
-        return r
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    function addToCart(item: ICartItem) {
-      add(item)
-    }
-
-    watch(
-      () => route.params,
-      async () => {
-        currentSubcategories.value = setSubcategories()
-        products.value = await getAllProducts()
-      }
-    )
-
-    onMounted(async () => {
-      currentSubcategories.value = setSubcategories()
-      products.value = await getAllProducts()
+    const currentSubcategories = computed(() => {
+      return route.params.subcategory ? [] : currentCategory.value?.subcategories 
     })
 
+    function setCurrentCategory(categories: ICategory[]): ICategory {
+      return categories.filter((v) => route.params.name === v.category.to)[0]
+    }
+
+    function addToCart(product: IProduct) {
+      add(product)
+    }
+
+    watch(() => route.params, () => {      
+      currentCategory.value = setCurrentCategory(categories)
+    })
+
+    onMounted(() => {
+      currentCategory.value = setCurrentCategory(categories)
+    })
     return {
-      products,
       addToCart,
-      items,
-      currentSubcategories
+      products,
+      currentSubcategories,
+      currentCategory
     }
   }
 })
