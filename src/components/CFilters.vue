@@ -18,7 +18,11 @@
         <p>{{ $t('categories') }}</p>
         <ul>
           <li v-for="c in subcategories" :key="c.id" class="products-view__checkbox">
-            <router-link :to="`/category/${category.category.to}/${c.to}`" @click="$emit('update', c.to)">{{ c.title }}</router-link>
+            <router-link
+              :to="`/category/${category.category.to}/${c.to}`"
+              @click="$emit('update', c.to)"
+              >{{ c.title }}</router-link
+            >
           </li>
         </ul>
       </div>
@@ -39,6 +43,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 import type { IFilterColor, ILink, ICategory } from '@/interfaces'
+
 import CIcon from './CIcon.vue'
 
 export default defineComponent({
@@ -131,8 +136,13 @@ export default defineComponent({
     li {
       position: relative;
 
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         position: absolute;
+        opacity: 0;
+
+        &:checked + label {
+          box-shadow: inset 0 0 0 2px $accent;
+        }
       }
 
       label {
@@ -140,6 +150,8 @@ export default defineComponent({
         height: 30px;
         display: block;
         border-radius: 50%;
+        box-shadow: none;
+        transition: all 0.2s;
       }
     }
   }

@@ -2,10 +2,14 @@
   <div class="products-view">
     <div class="wrapper">
       <div class="products-view__filters">
-        <CFilters v-if="currentSubcategories" :subcategories="currentSubcategories" :category="currentCategory" />
+        <CFilters
+          v-if="currentSubcategories && currentCategory"
+          :subcategories="!$route.params.subcategory ? currentSubcategories : []"
+          :category="currentCategory"
+        />
       </div>
 
-      <div class="products-view__products">
+      <div class="products-view__products" v-if="products.length">
         <ProductPreview
           v-for="v in products"
           :key="v.id"
@@ -24,7 +28,7 @@ import { customAxios } from '@/services/customAxios'
 import { categories } from '@/categories'
 import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/cart'
-import type { IProduct, ICategory } from '@/interfaces'
+import type { IProduct, ICategory, ILink } from '@/interfaces'
 
 import ProductPreview from '@/components/ProductPreview.vue'
 import CFilters from '@/components/CFilters.vue'
@@ -41,7 +45,7 @@ export default defineComponent({
     const currentCategory = ref<ICategory>()
 
     const currentSubcategories = computed(() => {
-      return route.params.subcategory ? [] : currentCategory.value?.subcategories 
+      return currentCategory.value?.subcategories
     })
 
     function setCurrentCategory(categories: ICategory[]): ICategory {
@@ -52,12 +56,46 @@ export default defineComponent({
       add(product)
     }
 
-    watch(() => route.params, () => {      
-      currentCategory.value = setCurrentCategory(categories)
-    })
+    async function getProducts(currentSubcategories: ILink[]) {
+      let result: IProduct[] = []
+      try {
+        if (!route.params.subcategory) {
+          
+          for (let item of currentSubcategories) {
+            const r = await customAxios.get(`/api/${item.to}.json`)
+            result = [...result, ...r.data.products]          
+          }
+        } else {
+          console.log(route.params.subcategory);
+          
+          const r = await customAxios.get(`/api/${route.params.subcategory}.json`)
+          result = [...result, ...r.data.products]
+        }
 
-    onMounted(() => {
+        return result
+      } catch (e) {
+        console.log(e)
+        return []
+      }
+    }
+
+    watch(
+      () => route.params,
+      async () => {
+        currentCategory.value = setCurrentCategory(categories)
+
+        if (currentSubcategories.value) {
+          products.value = await getProducts(currentSubcategories.value)
+        }
+      }
+    )
+
+    onMounted(async() => {
       currentCategory.value = setCurrentCategory(categories)
+
+      if (currentSubcategories.value) {
+        products.value = await getProducts(currentSubcategories.value)
+      }
     })
     return {
       addToCart,

@@ -9,7 +9,7 @@
                 "brown"
             ],
             "id": 1,
-            "image": "./images/product-item-3.jpg",
+            "image": "/images/product-item-3.jpg",
             "isAvailable": true,
             "price": {
                 "actual": 145,
@@ -28,7 +28,7 @@
                 "brown"
             ],
             "id": 2,
-            "image": "./images/product-item-4.jpg",
+            "image": "/images/product-item-4.jpg",
             "isAvailable": true,
             "price": {
                 "actual": 145,

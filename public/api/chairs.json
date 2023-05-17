@@ -8,7 +8,7 @@
                 "grey",
                 "brown"
             ],
-            "image": "./images/product-item-1.jpg",
+            "image": "/images/product-item-1.jpg",
             "isAvailable": true,
             "price": {
                 "actual": 45,
@@ -27,7 +27,7 @@
                 "grey",
                 "brown"
             ],
-            "image": "./images/product-item-2.jpg",
+            "image": "/images/product-item-2.jpg",
             "isAvailable": true,
             "price": {
                 "actual": 45,
