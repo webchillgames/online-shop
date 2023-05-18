@@ -155,5 +155,11 @@ export default defineComponent({
       padding: 8px;
     }
   }
+
+  @media (max-width: 786px) {
+    .wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 </style>

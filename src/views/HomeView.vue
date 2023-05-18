@@ -62,10 +62,6 @@ export default defineComponent({
 
 <style lang="scss">
 .home-view {
-  display: grid;
-  grid-template-rows: 1fr;
-  row-gap: 40px;
-
   &__products {
     @include productsGrid;
   }

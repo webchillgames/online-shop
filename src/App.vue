@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <SHeader />
 
     <router-view />
@@ -21,4 +21,7 @@ export default defineComponent({
 
 <style lang="scss">
   @import url('@/styles/base.scss');
+  .app {
+    height: 100%;
+  }
 </style>

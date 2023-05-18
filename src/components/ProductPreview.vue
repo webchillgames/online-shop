@@ -8,33 +8,38 @@
       <CButton icon="heart" class="product-preview__heart"></CButton>
     </div>
 
-    <CImage :image="product.image" />
+    <div class="product-preview__content">
+      <div>
+        <CImage :image="product.image" />
+      </div>
+      <div>
+        <h4>{{ product.title }}</h4>
 
-    <h4>{{ product.title }}</h4>
+        <div class="product-preview__stars">
+          <CIcon
+            v-for="i in 5"
+            :key="i"
+            icon="filled-star"
+            fill="#fff"
+            :style="{
+              fill: i < product.stars ? '#ffb933' : '#fff'
+            }"
+          />
+          <span>({{ product.reviews }})</span>
+        </div>
 
-    <div class="product-preview__stars">
-      <CIcon
-        v-for="i in 5"
-        :key="i"
-        icon="filled-star"
-        fill="#fff"
-        :style="{
-          fill: i < product.stars ? '#ffb933' : '#fff'
-        }"
-      />
-      <span>({{ product.reviews }})</span>
+        <div class="product-preview__price">
+          <p v-if="product.price.old" class="product-preview__old-price">{{ product.price.old }}</p>
+          <p>{{ product.price.actual }}</p>
+        </div>
+
+        <CButton
+          title="Add to cart"
+          @click="$emit('addToCart', product)"
+          class="product-preview__add-to-cart"
+        />
+      </div>
     </div>
-
-    <div class="product-preview__price">
-      <p v-if="product.price.old" class="product-preview__old-price">{{ product.price.old }}</p>
-      <p>{{ product.price.actual }}</p>
-    </div>
-
-    <CButton
-      title="Add to cart"
-      @click="$emit('addToCart', product)"
-      class="product-preview__add-to-cart"
-    />
   </div>
 </template>
 
@@ -163,8 +168,10 @@ export default defineComponent({
   }
 
   @media (max-width: 768px) {
-    max-width: none;
-    width: 100%;
+    &__content {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 </style>

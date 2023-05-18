@@ -61,6 +61,7 @@ export default defineComponent({
       { id: 1, title: t('home'), to: '/category/home' },
       { id: 2, title: t('kitchen'), to: '/category/kitchen' },
       { id: 3, title: t('bathroom'), to: '/category/bathroom' },
+      { id: 4, title: t('pickupPoints'), to: '/pickupPoints' },
     ]
     return {
       categoriesLinks,
@@ -211,6 +212,12 @@ export default defineComponent({
     animation-duration: 0.3s;
     animation-timing-function: ease-in;
     animation-fill-mode: forwards;
+  }
+
+  @media (max-width: 1024px) {
+    &__submenu-trigger {
+      display: none;
+    }
   }
 }
 

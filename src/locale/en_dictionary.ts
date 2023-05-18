@@ -10,5 +10,7 @@ export const en = {
   newArrivals: 'new arrivals',
   all: 'all',
   categories: 'categories',
-  color: 'color'
+  color: 'color',
+  pickupPoints: 'pickup points',
+  closed: 'closed'
 }

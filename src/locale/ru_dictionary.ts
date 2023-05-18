@@ -10,5 +10,7 @@ export const ru = {
   newArrivals: 'новинки',
   all: 'все',
   categories: 'категории',
-  color: 'цвет'
+  color: 'цвет',
+  pickupPoints: 'пункты выдачи',
+  closed: 'закрыто'
 }
