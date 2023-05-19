@@ -41,3 +41,20 @@ export interface ICategory {
 //     min: number
 //     max: number
 // }
+export interface IPointWorkinHours {
+  day: string
+  from: string
+  to: string
+}
+
+export interface IPointInfo {
+  street: string
+  title: string
+  workingHours: IPointWorkinHours[]
+}
+
+export interface IPoint {
+  coords: number[]
+  id: number
+  info: IPointInfo
+}

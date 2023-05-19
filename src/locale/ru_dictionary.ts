@@ -11,6 +11,9 @@ export const ru = {
   all: 'все',
   categories: 'категории',
   color: 'цвет',
-  pickupPoints: 'пункты выдачи',
-  closed: 'закрыто'
+  pickupPoints: 'Пункты выдачи',
+  closed: 'закрыто',
+  workingHours: 'Часы работы',
+  showOnMap: 'Показать на карте',
+  nothingFound: 'Ничего не найдено'
 }

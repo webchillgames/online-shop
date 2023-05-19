@@ -1,0 +1,196 @@
+{
+    "points": [
+        {
+            "coords": [
+                -8.71835,
+                115.170252
+            ],
+            "id": 1,
+            "info": {
+                "street": "Jl. Poppies II No.7c, Kuta, Kec. Kuta, Kabupaten Badung, Bali 80361",
+                "title": "Pickup point Kuta,  Bali",
+                "workingHours": [
+                    {
+                        "day": "Monday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Tuesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Wednesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Thursday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Friday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Saturday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Sunday",
+                        "from": "11: 00",
+                        "to": "14.00"
+                    }
+                ]
+            }
+        },
+        {
+            "coords": [
+                -8.79714,
+                115.223759
+            ],
+            "id": 2,
+            "info": {
+                "street": "Jl. Pratama No.10, Benoa, Kec. Kuta Sel., Kabupaten Badung, Bali 80361",
+                "title": "Pickup point Nusa Dua",
+                "workingHours": [
+                    {
+                        "day": "Monday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Tuesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Wednesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Thursday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Friday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Saturday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Sunday",
+                        "from": null,
+                        "to": null
+                    }
+                ]
+            }
+        },
+        {
+            "coords": [
+                -8.670567,
+                115.208101
+            ],
+            "id": 3,
+            "info": {
+                "street": "Jl. Nusakambangan No 84, Denpasar Barat, Dauh Puri Kauh, Kec. Denpasar Bar., Kota Denpasar, Bali 80113",
+                "title": "Pickup point Denpasar",
+                "workingHours": [
+                    {
+                        "day": "Monday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Tuesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Wednesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Thursday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Friday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Saturday",
+                        "from": "11: 00",
+                        "to": "15.00"
+                    },
+                    {
+                        "day": "Sunday",
+                        "from": null,
+                        "to": null
+                    }
+                ]
+            }
+        },
+        {
+            "coords": [
+                -8.5075781,
+                115.2639979
+            ],
+            "id": 4,
+            "info": {
+                "street": "Jl. Raya Ubud No.14, Ubud, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571",
+                "title": "Pickup point Ubud",
+                "workingHours": [
+                    {
+                        "day": "Monday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Tuesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Wednesday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Thursday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Friday",
+                        "from": "11: 00",
+                        "to": "16.00"
+                    },
+                    {
+                        "day": "Sunday",
+                        "from": null,
+                        "to": null
+                    },
+                    {
+                        "day": "Sunday",
+                        "from": null,
+                        "to": null
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -31,5 +31,8 @@ export default defineComponent({
 <style lang="scss">
 .c-button {
   cursor: pointer;
+  span {
+    text-transform: uppercase;
+  }
 }
 </style>

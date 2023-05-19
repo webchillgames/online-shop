@@ -12,5 +12,8 @@ export const en = {
   categories: 'categories',
   color: 'color',
   pickupPoints: 'pickup points',
-  closed: 'closed'
+  closed: 'closed',
+  workingHours: 'Working hours',
+  showOnMap: 'show on map',
+  nothingFound: 'Nothing found'
 }

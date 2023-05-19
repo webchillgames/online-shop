@@ -15,6 +15,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/geojson": "^7946.0.10",
+    "@types/leaflet": "^1.9.3",
     "axios": "^1.4.0",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
@@ -25,7 +27,6 @@
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/jest": "^29.5.1",
     "@types/jsdom": "^21.1.0",
-    "@types/leaflet": "^1.9.3",
     "@types/node": "^18.14.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue-leaflet/vue-leaflet": "^0.9.0",
