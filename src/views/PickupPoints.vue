@@ -12,7 +12,7 @@
               name="OpenStreetMap"
             ></LTileLayer>
 
-            <LMarker v-for="p in points" :lat-lng="p.coords" :key="p.id"></LMarker>
+            <!-- <LMarker v-for="p in points" :lat-lng="p.coords" :key="p.id"></LMarker> -->
           </LMap>
         </div>
 
@@ -118,7 +118,7 @@ export default defineComponent({
   components: {
     LMap,
     LTileLayer,
-    LMarker,
+    // LMarker,
     CIcon
   },
   setup() {
