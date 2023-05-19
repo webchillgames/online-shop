@@ -1,18 +1,19 @@
 <template>
   <div class="pickup-points">
-    <div class="wrapper" v-if="points.length">
+    <div class="wrapper">
       <h2>{{ $t('pickupPoints') }}</h2>
 
       <div class="pickup-points__content">
-        <div class="pickup-points__map" id="map"></div>
+        <div class="pickup-points__map" id="map" ref="mapRef"></div>
 
         <div class="pickup-points__points">
-          <PointInfo v-for="p in points" :key="p.id" :point="p" @showPoint="showPoint" />
+          <div v-if="points.length">
+            <PointInfo v-for="p in points" :key="p.id" :point="p" @showPoint="showPoint" />
+          </div>
+          <div v-else>{{ $t('nothingFound') }}...</div>
         </div>
       </div>
     </div>
-
-    <div class="wrapper" v-else>{{ $t('nothingFound') }}</div>
   </div>
 </template>
 
@@ -38,6 +39,7 @@ export default defineComponent({
     const zoom = ref(10)
     const points = ref<IPoint[]>([])
     const map = ref<L.Map>()
+    const mapRef = ref()
 
     async function getPoints() {
       try {
@@ -49,8 +51,8 @@ export default defineComponent({
       }
     }
 
-    function createMapContainer() {
-      return L.map('map').setView(CENTER, 10)
+    function createMapContainer(mapRef: HTMLElement) {
+      return L.map(mapRef).setView(CENTER, 10)
     }
 
     function setTileLayer(mapDiv: L.Map) {
@@ -68,14 +70,14 @@ export default defineComponent({
     function showPoint() {}
 
     onMounted(async () => {
+      console.log(document.querySelector('#map'))
       points.value = await getPoints()
-      map.value = createMapContainer()
-
+      map.value = createMapContainer(mapRef.value)
       setTileLayer(map.value)
       setMarkers(points.value, map.value)
     })
 
-    return { zoom, points, showPoint }
+    return { zoom, points, showPoint, mapRef }
   }
 })
 </script>
@@ -106,6 +108,7 @@ export default defineComponent({
     width: 50%;
     aspect-ratio: 1 / 1;
     overflow-y: scroll;
+    padding: 20px;
 
     &::-webkit-scrollbar {
       width: 10px;
