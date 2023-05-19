@@ -10,7 +10,7 @@
     </div>
     <div class="wrapper s-header__content">
       <CLink link="/">
-        <CImage image="/shop-logo.png" />
+        <CImage image="shop-logo.png" />
       </CLink>
 
       <div class="s-header__links">

@@ -34,7 +34,7 @@ export default defineComponent({
 
     async function getNewArrivals() {
       try {
-        const r = await customAxios.get('api/newArrivals.json')
+        const r = await customAxios.get('/api/newArrivals.json')
         
         return r.data.products
       } catch (e) {
