@@ -1,8 +1,7 @@
 import axios from 'axios'
 // 'https://api.publicapis.org/entries'
-export const customAxios = {
-  get(path: string) {
-    const r = axios.get(path)
-    return r
-  }
-}
+const instance = axios.create({
+  baseURL: import.meta.env.BASE_URL,
+});
+
+export const customAxios = instance
