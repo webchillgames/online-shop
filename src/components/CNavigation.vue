@@ -147,7 +147,7 @@ export default defineComponent({
   .c-navigation__submenu {
     display: none;
     position: absolute;
-    z-index: 90;
+    z-index: 100;
     width: 100%;
     top: 100%;
     background-color: #fff;

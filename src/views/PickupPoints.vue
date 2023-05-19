@@ -102,6 +102,8 @@ export default defineComponent({
     overflow: hidden;
     width: 50%;
     aspect-ratio: 1 / 1;
+    position: relative;
+    z-index: 90;
   }
 
   &__points {
