@@ -37,7 +37,7 @@ export default defineComponent({
   setup() {
     const zoom = ref(10)
     const points = ref<IPoint[]>([])
-    const map = ref()
+    const map = ref<L.Map>()
 
     async function getPoints() {
       try {
@@ -53,13 +53,13 @@ export default defineComponent({
       return L.map('map').setView(CENTER, 10)
     }
 
-    function setTileLayer(mapDiv) {
+    function setTileLayer(mapDiv: L.Map) {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
       }).addTo(mapDiv)
     }
 
-    function setMarkers(points: IPoint[], mapDiv) {
+    function setMarkers(points: IPoint[], mapDiv: L.Map) {
       points.forEach((v) => {
         L.marker({ lat: v.coords[0], lng: v.coords[1] }).addTo(mapDiv)
       })
