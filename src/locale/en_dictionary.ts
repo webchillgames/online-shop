@@ -15,5 +15,6 @@ export const en = {
   closed: 'closed',
   workingHours: 'Working hours',
   showOnMap: 'show on map',
-  nothingFound: 'Nothing found'
+  nothingFound: 'Nothing found',
+  showed: 'Showed'
 }

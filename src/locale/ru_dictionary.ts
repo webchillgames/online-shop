@@ -15,5 +15,6 @@ export const ru = {
   closed: 'закрыто',
   workingHours: 'Часы работы',
   showOnMap: 'Показать на карте',
-  nothingFound: 'Ничего не найдено'
+  nothingFound: 'Ничего не найдено',
+  showed: 'Отображается'
 }
