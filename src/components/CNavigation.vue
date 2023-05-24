@@ -14,7 +14,7 @@
                 class="c-navigation__submenu c-navigation__submenu--categories"
                 :class="{ active: categoriesIsShow, close: !categoriesIsShow }"
               >
-                <li v-for="c in categoriesLinks" :key="c.id">
+                <li v-for="c in categoriesLinks" :key="c.id" @click="categoriesIsShow = false">
                   <router-link :to="c.to">
                     <span>{{ c.title }}</span>
                   </router-link>

@@ -60,7 +60,7 @@ export default defineComponent({
       }
       return points.value.map((v) =>
         L.marker({ lat: v.coords[0], lng: v.coords[1] }, options).on('click', () =>
-          togglePointShowing(v)
+          togglePopupShowing(v)
         )
       )
     })
@@ -105,13 +105,19 @@ export default defineComponent({
     function setCurrentMarkers(point?: IPoint) {
       if (point) {
         currentMarkers.value = []
-        currentMarkers.value.push(L.marker({ lat: point.coords[0], lng: point.coords[1] }))
+        currentMarkers.value.push(
+          L.marker({ lat: point.coords[0], lng: point.coords[1] }).on('click', () =>
+            togglePopupShowing(point)
+          )
+        )
       } else {
         currentMarkers.value = markers.value
       }
     }
 
     function togglePointShowing(point: IPoint) {
+      console.log(33);
+      
       clearMap()
 
       if (currentPointInfo.value !== point.id) {
@@ -125,6 +131,59 @@ export default defineComponent({
       addMarkersToMap()
     }
 
+    function togglePopupShowing(point: IPoint) {
+      const popLocation = new L.LatLng(point.coords[0], point.coords[1])
+
+      togglePointShowing(point)
+
+      const popup = L.popup().setLatLng(popLocation).setContent(`
+          <div>
+            <p>${point.info.title}</p>
+            <p>${point.info.street}</p>
+            
+            <ul>
+               <li>
+                <span>${point.info.workingHours[0].day}:</span>
+                <span> ${point.info.workingHours[0].from} - ${point.info.workingHours[0].to}</span>
+              </li>
+              <li>
+                <span>${point.info.workingHours[1].day}:</span>
+                <span> ${point.info.workingHours[1].from} - ${point.info.workingHours[1].to}</span>
+              </li>
+              <li>
+                <span>${point.info.workingHours[2].day}:</span>
+                <span> ${point.info.workingHours[2].from} - ${point.info.workingHours[2].to}</span>
+              </li>
+              <li>
+                <span>${point.info.workingHours[3].day}:</span>
+                <span> ${point.info.workingHours[3].from} - ${point.info.workingHours[3].to}</span>
+              </li>
+              <li>
+                <span>${point.info.workingHours[4].day}:</span>
+                <span> ${point.info.workingHours[4].from} - ${point.info.workingHours[4].to}</span>
+              </li>
+              <li>
+                <span>${point.info.workingHours[5].day}:</span>
+                <span> ${
+                  point.info.workingHours[5].from ? point.info.workingHours[5].from : 'closed'
+                }
+                </span>
+              </li>
+              <li>
+                <span>${point.info.workingHours[6].day}:</span>
+                <span> ${
+                  point.info.workingHours[6].from ? point.info.workingHours[6].from : 'closed'
+                }</span>
+              </li>
+            </ul>
+          </div>
+      `).on('remove', () => togglePointShowing(point))
+
+      if (map.value) {
+        popup.openOn(map.value)
+      }
+    }
+
     onMounted(async () => {
       points.value = await getPoints()
       map.value = createMapContainer(mapRef.value)
@@ -133,7 +192,16 @@ export default defineComponent({
       addMarkersToMap()
     })
 
-    return { zoom, points, togglePointShowing, mapRef, map, markers, currentPointInfo }
+    return {
+      zoom,
+      points,
+      togglePointShowing,
+      togglePopupShowing,
+      mapRef,
+      map,
+      markers,
+      currentPointInfo
+    }
   }
 })
 </script>
@@ -144,9 +212,6 @@ export default defineComponent({
 
   .wrapper {
     padding-bottom: 40px;
-  }
-
-  &__content {
   }
 
   h2 {
