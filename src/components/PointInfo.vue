@@ -6,7 +6,7 @@
       <span>{{ point.info.street }}</span>
     </div>
 
-    <CButton @click="$emit('toggleShowPoint', point, point.id)" :title="current ? $t('showed') : $t('showOnMap')" />
+    <CButton @click="$emit('togglePointShowing', point)" :title="current ? $t('showed') : $t('showOnMap')" />
 
     <div class="point-info__working-hours">
       <p>{{ $t('workingHours') }}:</p>
@@ -32,7 +32,7 @@ import CButton from './CButton.vue'
 
 export default defineComponent({
   components: { CIcon, CButton },
-  emits: ['toggleShowPoint'],
+  emits: ['togglePointShowing'],
   props: {
     point: {
       type: Object as PropType<IPoint>,

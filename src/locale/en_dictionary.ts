@@ -16,5 +16,6 @@ export const en = {
   workingHours: 'Working hours',
   showOnMap: 'show on map',
   nothingFound: 'Nothing found',
-  showed: 'Showed'
+  showed: 'Showed',
+  showAll: 'Show all'
 }

@@ -4,9 +4,7 @@
       <h2>{{ $t('pickupPoints') }}</h2>
 
       <div class="pickup-points__content">
-        <div class="pickup-points__map" id="map" ref="mapRef">
-          <CButton :title="$t('showAll')" />
-        </div>
+        <div class="pickup-points__map" id="map" ref="mapRef"></div>
 
         <div class="pickup-points__points">
           <div v-if="points.length">
@@ -14,7 +12,7 @@
               v-for="p in points"
               :key="p.id"
               :point="p"
-              @toggleShowPoint="toggleShowPoint"
+              @togglePointShowing="togglePointShowing"
               :current="currentPointInfo === p.id"
             />
           </div>
@@ -38,14 +36,12 @@ import type { IPoint } from '@/interfaces'
 
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import CButton from '@/components/CButton.vue'
 
 const CENTER = { lat: -8.6538237, lng: 115.1825386 }
 
 export default defineComponent({
   components: {
-    PointInfo,
-    CButton
+    PointInfo
   },
   setup() {
     const zoom = ref(10)
@@ -55,9 +51,19 @@ export default defineComponent({
     const currentMarkers = ref<L.Marker[]>()
     const currentPointInfo = ref<null | number>(null)
 
-    const markers = computed(() =>
-      points.value.map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }))
-    )
+    const markers = computed(() => {
+      const options = {
+        title: 'pickup poin',
+        riseOnHover: true,
+        clickable: true,
+        interactive: true
+      }
+      return points.value.map((v) =>
+        L.marker({ lat: v.coords[0], lng: v.coords[1] }, options).on('click', () =>
+          togglePointShowing(v)
+        )
+      )
+    })
 
     async function getPoints() {
       try {
@@ -70,7 +76,11 @@ export default defineComponent({
     }
 
     function createMapContainer(mapRef: HTMLElement) {
-      return L.map(mapRef).setView(CENTER, 10)
+      const options = {
+        trackResize: true,
+        preferCanvas: true
+      }
+      return L.map(mapRef, options).setView(CENTER, 10)
     }
 
     function setTileLayer(mapDiv: L.Map) {
@@ -79,18 +89,7 @@ export default defineComponent({
       }).addTo(mapDiv)
     }
 
-    function setCurrentMarkers(point?: IPoint) {
-      if (currentPointInfo.value && point) {
-        currentMarkers.value = []
-        currentMarkers.value.push(L.marker({ lat: point.coords[0], lng: point.coords[1] }))
-      } else {
-        currentMarkers.value = markers.value
-      }
-    }
-
     function addMarkersToMap() {
-      // console.log(currentMarkers.value)
-
       if (map.value && currentMarkers.value) {
         currentMarkers.value.forEach((v) => v.addTo(map.value as L.Map))
       }
@@ -99,23 +98,31 @@ export default defineComponent({
     function clearMap() {
       if (currentMarkers.value) {
         currentMarkers.value.forEach((v) => v.remove())
+        currentMarkers.value = []
       }
     }
 
-    function toggleShowPoint(point: IPoint, id: number) {
-      if (map.value) {
-        if (!currentPointInfo.value || currentPointInfo.value !== id) {
-          currentPointInfo.value = id
-          clearMap()
-          setCurrentMarkers(point)
-          addMarkersToMap()
-        } else if (currentPointInfo.value === id) {
-          currentPointInfo.value = null
-          clearMap()
-          setCurrentMarkers()
-          addMarkersToMap()
-        }
+    function setCurrentMarkers(point?: IPoint) {
+      if (point) {
+        currentMarkers.value = []
+        currentMarkers.value.push(L.marker({ lat: point.coords[0], lng: point.coords[1] }))
+      } else {
+        currentMarkers.value = markers.value
       }
+    }
+
+    function togglePointShowing(point: IPoint) {
+      clearMap()
+
+      if (currentPointInfo.value !== point.id) {
+        currentPointInfo.value = point.id
+        setCurrentMarkers(point)
+      } else {
+        currentPointInfo.value = null
+        setCurrentMarkers()
+      }
+
+      addMarkersToMap()
     }
 
     onMounted(async () => {
@@ -126,7 +133,7 @@ export default defineComponent({
       addMarkersToMap()
     })
 
-    return { zoom, points, toggleShowPoint, mapRef, map, markers, currentPointInfo }
+    return { zoom, points, togglePointShowing, mapRef, map, markers, currentPointInfo }
   }
 })
 </script>
