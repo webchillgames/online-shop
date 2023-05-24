@@ -9,16 +9,18 @@
         </div>
 
         <div class="pickup-points__points">
-          <!-- <div v-if="points.length"> -->
-          <PointInfo
-            v-for="p in points"
-            :key="p.id"
-            :point="p"
-            @toggleShowPoint="toggleShowPoint"
-            :current="currentPointInfo === p.id"
-          />
-          <!-- </div> -->
-          <!-- <div v-else>{{ $t('nothingFound') }}...</div> -->
+          <div v-if="points.length">
+            <PointInfo
+              v-for="p in points"
+              :key="p.id"
+              :point="p"
+              @toggleShowPoint="toggleShowPoint"
+              :current="currentPointInfo === p.id"
+            />
+          </div>
+          <div v-else>
+            <p>{{ $t('nothingFound') }}...</p>
+          </div>
         </div>
       </div>
     </div>
@@ -50,7 +52,6 @@ export default defineComponent({
     const points = ref<IPoint[]>([])
     const map = ref<L.Map>()
     const mapRef = ref()
-    // const markers = ref<L.Marker[]>([])
     const currentMarkers = ref<L.Marker[]>()
     const currentPointInfo = ref<null | number>(null)
 
@@ -88,7 +89,7 @@ export default defineComponent({
     }
 
     function addMarkersToMap() {
-      console.log(currentMarkers.value)
+      // console.log(currentMarkers.value)
 
       if (map.value && currentMarkers.value) {
         currentMarkers.value.forEach((v) => v.addTo(map.value as L.Map))
@@ -103,7 +104,7 @@ export default defineComponent({
 
     function toggleShowPoint(point: IPoint, id: number) {
       if (map.value) {
-        if (!currentPointInfo.value) {
+        if (!currentPointInfo.value || currentPointInfo.value !== id) {
           currentPointInfo.value = id
           clearMap()
           setCurrentMarkers(point)
@@ -133,6 +134,7 @@ export default defineComponent({
 <style lang="scss">
 .pickup-points {
   height: 100%;
+
   .wrapper {
     padding-bottom: 40px;
   }
@@ -148,7 +150,7 @@ export default defineComponent({
     flex-shrink: 0;
     border-radius: 8px;
     overflow: hidden;
-    width: 50%;
+    width: 100%;
     aspect-ratio: 1 / 1;
     position: relative;
     z-index: 90;
@@ -187,6 +189,12 @@ export default defineComponent({
 
     // scrollbar-color: linear-gradient(to top, #85b839, #9eba2f, #b7bb29, #cfbb26, #e7bb2a, #ffb933);
     // scrollbar-width: thin;
+  }
+
+  @media (max-width: 768px) {
+    &__points {
+      grid-template-columns: 1fr;
+    }
   }
 }
 </style>
