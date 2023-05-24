@@ -53,7 +53,7 @@ export default defineComponent({
 
     const markers = computed(() => {
       const options = {
-        title: 'pickup poin',
+        title: 'pickup point',
         riseOnHover: true,
         clickable: true,
         interactive: true
@@ -78,7 +78,8 @@ export default defineComponent({
     function createMapContainer(mapRef: HTMLElement) {
       const options = {
         trackResize: true,
-        preferCanvas: true
+        preferCanvas: true,
+        zoomAnimation:false
       }
       return L.map(mapRef, options).setView(CENTER, 10)
     }
@@ -116,19 +117,25 @@ export default defineComponent({
     }
 
     function togglePointShowing(point: IPoint) {
-      console.log(33);
-      
-      clearMap()
+      currentPointInfo.value !== point.id ? showSingleMarker(point) : showAllMarkers()
+    }
 
-      if (currentPointInfo.value !== point.id) {
+    function showSingleMarker(point: IPoint) {
+      if (map.value) {
+        clearMap()
         currentPointInfo.value = point.id
         setCurrentMarkers(point)
-      } else {
+        addMarkersToMap()
+      }
+    }
+
+    function showAllMarkers() {
+      if (map.value) {
+        clearMap()
         currentPointInfo.value = null
         setCurrentMarkers()
+        addMarkersToMap()
       }
-
-      addMarkersToMap()
     }
 
     function togglePopupShowing(point: IPoint) {
@@ -136,7 +143,10 @@ export default defineComponent({
 
       togglePointShowing(point)
 
-      const popup = L.popup().setLatLng(popLocation).setContent(`
+      const popup = L.popup()
+        .setLatLng(popLocation)
+        .setContent(
+          `
           <div>
             <p>${point.info.title}</p>
             <p>${point.info.street}</p>
@@ -177,7 +187,9 @@ export default defineComponent({
               </li>
             </ul>
           </div>
-      `).on('remove', () => togglePointShowing(point))
+      `
+        )
+        .on('remove', showAllMarkers)
 
       if (map.value) {
         popup.openOn(map.value)
@@ -222,7 +234,7 @@ export default defineComponent({
     flex-shrink: 0;
     border-radius: 8px;
     overflow: hidden;
-    width: 100%;
+    width: 50%;
     aspect-ratio: 1 / 1;
     position: relative;
     z-index: 90;

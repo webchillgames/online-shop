@@ -40,7 +40,7 @@ export default defineComponent({
     const products = ref<IProduct[]>([])
 
     const cartStore = useCartStore()
-    const { add } = cartStore
+    const { addToCart } = cartStore
 
     const currentCategory = ref<ICategory>()
 
@@ -50,10 +50,6 @@ export default defineComponent({
 
     function setCurrentCategory(categories: ICategory[]): ICategory {
       return categories.filter((v) => route.params.name === v.category.to)[0]
-    }
-
-    function addToCart(product: IProduct) {
-      add(product)
     }
 
     async function getProducts(currentSubcategories: ILink[]) {

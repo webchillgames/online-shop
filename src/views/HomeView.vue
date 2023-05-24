@@ -28,9 +28,9 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   setup() {
     const products = ref<IProduct[]>([])
-    const cartRouter = useCartStore()
-    const { items } = storeToRefs(cartRouter)
-    const { add } = cartRouter
+    const cartStore = useCartStore()
+    const { items } = storeToRefs(cartStore)
+    const { addToCart } = cartStore
 
     async function getNewArrivals() {
       try {
@@ -42,9 +42,6 @@ export default defineComponent({
       }
     }
 
-    function addToCart(item: IProduct) {
-      add(item)
-    }
 
     onMounted(async () => {
       products.value = await getNewArrivals()

@@ -20,7 +20,7 @@
               <p>{{ v.price.actual }}</p>
             </div>
             <div class="cart-view__cell">
-              <CButton class="cart-view__remove" icon="trash" @click="removeItem(v.id)"></CButton>
+              <CButton class="cart-view__remove" icon="trash" @click="removeFromCart(v.id)"></CButton>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default defineComponent({
   setup() {
     const cartStore = useCartStore()
     const { items } = storeToRefs(cartStore)
-    const { remove } = cartStore
+    const { removeFromCart } = cartStore
     const summaryPrice = ref(0)
 
     function setSummaryPrice(): number {
@@ -65,12 +65,6 @@ export default defineComponent({
       return result
     }
 
-    function removeItem(id: number) {
-      remove(id)
-
-      //можно показать что то
-    }
-
     onMounted(() => {
       summaryPrice.value = setSummaryPrice()
     })
@@ -78,7 +72,7 @@ export default defineComponent({
     return {
       items,
       summaryPrice,
-      removeItem
+      removeFromCart
     }
   }
 })
