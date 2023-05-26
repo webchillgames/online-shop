@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { IProduct } from '../interfaces'
 import { customStorage } from '@/services/customStorage'
+import { useMiniModalsStore } from './miniModals'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -11,7 +12,7 @@ export const useCartStore = defineStore('cart', {
       let result: number = 0
 
       if (state.items.length) {
-        state.items.forEach((v) => {
+        state.items.forEach((v: IProduct) => {
           result += v.price.actual
         })
       }
@@ -23,17 +24,21 @@ export const useCartStore = defineStore('cart', {
   actions: {
     addToCart(item: IProduct): void {
       let items = []
+      const modalStore = useMiniModalsStore()
+      const { showMiniModal } = modalStore
+
       if (customStorage.get('user-cart')) {
         items = customStorage.get('user-cart')
         items.push(item)
-        console.log(111, items)
+        console.log(111, item)
 
         customStorage.set('user-cart', items)
+        showMiniModal(`Added to Cart ${item.title}`, 'success')
       } else {
         items.push(item)
         customStorage.set('user-cart', items)
       }
-      location.reload()
+      // location.reload()
     },
     removeFromCart(id: number) {
       const items = customStorage.get('user-cart')

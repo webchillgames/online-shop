@@ -20,3 +20,28 @@
 .fade-leave-to {
     transform: translate3d(0, 10%, 0);
 }
+
+.fadeVertical-enter-from {
+    opacity: 0;
+    transform: translate3d(-50%, -10%, 0);
+    left: 50%;
+}
+
+.fadeVertical-enter-to {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0);
+}
+
+.fadeVertical-enter-active {
+    transition: all 0.2s ease-in;
+}
+
+.fadeVertical-leave-active {
+    opacity: 0.5;
+    transition: all 0.2s ease-out;
+}
+
+.fadeVertical-leave-to {
+    transform: translate3d(-50%, -10%, 0);
+    left: 50%;
+}

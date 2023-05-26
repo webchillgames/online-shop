@@ -13,6 +13,7 @@
         </div>
       </section>
     </div>
+
   </div>
 </template>
 
@@ -25,23 +26,23 @@ import ProductPreview from '@/components/ProductPreview.vue'
 import { customAxios } from '@/services/customAxios'
 import { storeToRefs } from 'pinia'
 
+
 export default defineComponent({
   setup() {
     const products = ref<IProduct[]>([])
     const cartStore = useCartStore()
     const { items } = storeToRefs(cartStore)
     const { addToCart } = cartStore
-
+ 
     async function getNewArrivals() {
       try {
         const r = await customAxios.get('/api/newArrivals.json')
-        
+
         return r.data.products
       } catch (e) {
         console.log(e)
       }
     }
-
 
     onMounted(async () => {
       products.value = await getNewArrivals()
@@ -50,7 +51,7 @@ export default defineComponent({
     return {
       products,
       addToCart,
-      items
+      items,
     }
   },
   components: { ProductPreview }
@@ -60,7 +61,7 @@ export default defineComponent({
 <style lang="scss">
 .home-view {
   @include page;
-  
+
   &__products {
     @include productsGrid;
   }

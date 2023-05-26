@@ -65,6 +65,7 @@ import CLink from '@/components/CLink.vue'
 import { storeToRefs } from 'pinia'
 import CImage from '@/components/CImage.vue'
 import CIcon from '@/components/CIcon.vue'
+import type { IProduct } from '@/interfaces'
 
 export default defineComponent({
   components: { CButton, CLink, CImage, CIcon },
@@ -77,7 +78,7 @@ export default defineComponent({
     function setSummaryPrice(): number {
       let result: number = 0
 
-      items.value.forEach((v) => {
+      items.value.forEach((v: IProduct) => {
         result += v.price.actual
       })
 
