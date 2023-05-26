@@ -9,6 +9,7 @@ export interface IProduct {
   reviews: number
   stars: number
   type: string
+  quantity: number 
 }
 
 export interface IBudge {

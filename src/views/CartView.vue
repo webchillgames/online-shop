@@ -87,6 +87,8 @@ export default defineComponent({
 
     onMounted(() => {
       summaryPrice.value = setSummaryPrice()
+      console.log(items.value);
+      
     })
 
     return {

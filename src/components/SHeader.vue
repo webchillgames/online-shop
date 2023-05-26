@@ -41,6 +41,7 @@ export default defineComponent({
   setup() {
     const cartStore = useCartStore()
     const { itemsQuantity } = storeToRefs(cartStore)
+    
     return {
       itemsQuantity
     }

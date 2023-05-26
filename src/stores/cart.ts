@@ -23,22 +23,40 @@ export const useCartStore = defineStore('cart', {
   },
   actions: {
     addToCart(item: IProduct): void {
-      let items = []
-      const modalStore = useMiniModalsStore()
-      const { showMiniModal } = modalStore
+      const previousCart = customStorage.get('user-cart')
 
-      if (customStorage.get('user-cart')) {
-        items = customStorage.get('user-cart')
-        items.push(item)
-        console.log(111, item)
+      let data: IProduct[] = []
 
-        customStorage.set('user-cart', items)
-        showMiniModal(`Added to Cart ${item.title}`, 'success')
+      if (!previousCart) {
+        console.log('!pCart')
+
+        item.quantity = 1
+        data.push(item)
       } else {
-        items.push(item)
-        customStorage.set('user-cart', items)
+        const inPreviousCart: IProduct[] = previousCart.filter((v: IProduct) => v.id === item.id)
+
+        if (inPreviousCart.length) {
+          item.quantity += 1
+
+          data = []
+        }
       }
-      // location.reload()
+
+      // } else if (previousCart && inPreviousCart && inPreviousCart.length) {
+      //   // console.log(inPreviousCart[0]);
+
+      //   // inPreviousCart[0].quantity += 1
+
+      //   // console.log(2, inPreviousCart[0].quantity)
+      //   // data = [...previousCart.filter((v: IProduct) => v.id !== item.id), ...inPreviousCart[0]]
+
+      // } else if (previousCart && !inPreviousCart.length) {
+      //   data = [...previousCart]
+      //   data.push(item)
+      // }
+
+      this.items = data
+      customStorage.set('user-cart', this.items)
     },
     removeFromCart(id: number) {
       const items = customStorage.get('user-cart')
