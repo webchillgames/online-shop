@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="c-image">
     <img :src="image" />
   </div>
 </template>
@@ -19,4 +19,12 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.c-image {
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+</style>

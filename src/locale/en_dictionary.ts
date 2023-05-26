@@ -17,5 +17,10 @@ export const en = {
   showOnMap: 'show on map',
   nothingFound: 'Nothing found',
   showed: 'Showed',
-  showAll: 'Show all'
+  showAll: 'Show all',
+  totalPrice: 'Total price',
+  promotionCodeHere: 'Promotion code here',
+  couponCode: 'Coupon code',
+  checkOut: 'Check out',
+  continueShopping: 'Continue shopping'
 }

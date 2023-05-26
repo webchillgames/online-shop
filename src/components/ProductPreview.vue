@@ -165,6 +165,12 @@ export default defineComponent({
     font-weight: 700;
     margin: 0 auto;
     @include flexCenter;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: $primary;
+      color: #fff;
+    }
   }
 
   @media (max-width: 768px) {

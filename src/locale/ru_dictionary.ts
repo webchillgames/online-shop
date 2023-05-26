@@ -17,5 +17,9 @@ export const ru = {
   showOnMap: 'Показать на карте',
   nothingFound: 'Ничего не найдено',
   showed: 'Отображается',
-  showAll: 'Показать все'
+  showAll: 'Показать все',
+  totalPrice: 'Итоговая сумма',
+  promotionCodeHere: 'Купон сюда',
+  checkOut: 'Оплатить',
+  continueShopping: 'Продолжить покупки'
 }

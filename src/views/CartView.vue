@@ -6,8 +6,12 @@
           <div v-for="v in items" :key="v.id" class="cart-view__item">
             <div class="cart-view__cell">
               <CImage :image="v.image" />
+            </div>
+
+            <div class="cart-view__cell">
               <p>{{ v.title }}</p>
             </div>
+
             <div class="cart-view__cell">
               <div class="cart-view__quantity">
                 <CButton title="+"></CButton>
@@ -20,20 +24,34 @@
               <p>{{ v.price.actual }}</p>
             </div>
             <div class="cart-view__cell">
-              <CButton class="cart-view__remove" icon="trash" @click="removeFromCart(v.id)"></CButton>
+              <CButton
+                class="cart-view__remove"
+                icon="trash"
+                @click="removeFromCart(v.id)"
+              ></CButton>
             </div>
           </div>
-        </div>
-
-        <div class="cart-view__summary">
-          <p>{{ summaryPrice }}</p>
-          <button>Оплатить</button>
+          <div class="cart-view__summary">
+            <div class="cart-view__cell">
+              <label to="coupon"> {{ $t('couponCode') }}: </label>
+              <div class="cart-view__coupon">
+                <input id="coupon" type="text" :placeholder="$t('promotionCodeHere')" />
+                <CButton><CIcon icon="arrow" /></CButton>
+              </div>
+            </div>
+            <div class="cart-view__cell">
+              <p>{{ $t('totalPrice') }}:</p>
+              <p>{{ summaryPrice }}</p>
+            </div>
+          </div>
+          <CLink link="/" class="cart-view__link">{{ $t('continueShopping') }}</CLink>
+          <CLink link="/" class="cart-view__link">{{ $t('checkOut') }}</CLink>
         </div>
       </div>
 
-      <div v-else>
+      <div v-else class="cart-view__empty">
         <p>Корзина пуста</p>
-        <CLink link="/products" title="К покупкам" />
+        <CLink link="/" :title="$t('continueShopping')" class="cart-view__link" />
       </div>
     </div>
   </div>
@@ -46,9 +64,10 @@ import CButton from '@/components/CButton.vue'
 import CLink from '@/components/CLink.vue'
 import { storeToRefs } from 'pinia'
 import CImage from '@/components/CImage.vue'
+import CIcon from '@/components/CIcon.vue'
 
 export default defineComponent({
-  components: { CButton, CLink, CImage },
+  components: { CButton, CLink, CImage, CIcon },
   setup() {
     const cartStore = useCartStore()
     const { items } = storeToRefs(cartStore)
@@ -80,18 +99,31 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-view {
+  @include page;
+
   &__cell {
     display: flex;
     justify-content: center;
+    max-height: 150px;
+  }
+
+  .c-image {
+    height: 100px;
+    aspect-ratio: 1 / 1;
   }
 
   &__item {
     display: flex;
-    border: 1px solid $border;
+    border: 1px solid $light-border;
     padding: 30px;
     display: grid;
-    grid-template-columns: 50% 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
+    border-top: none;
+
+    &:first-child {
+      border-top: 1px solid $light-border;
+    }
   }
 
   &__quantity {
@@ -99,7 +131,7 @@ export default defineComponent({
     grid-template-columns: 30px 30px 30px;
     grid-template-rows: 30px;
     align-items: center;
-    border: 1px solid $border;
+    border: 1px solid $light-border;
 
     button {
       display: flex;
@@ -121,15 +153,90 @@ export default defineComponent({
     border: none;
   }
 
-  &__table {
-    margin-bottom: 50px;
+  &__coupon {
+    position: relative;
+    height: 30px;
+    width: 250px;
+    border: 1px solid $light-border;
+    border-radius: 16px;
+    overflow: hidden;
+
+    input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 4px 8px;
+      box-sizing: border-box;
+
+      &::placeholder {
+        font-size: 12px;
+        line-height: 20px;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      font-size: 14px;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      border: none;
+      background-color: transparent;
+      @include flexCenter;
+      transition: all 0.2s;
+
+      svg {
+        stroke: $font;
+      }
+
+      &:hover svg {
+        stroke: rgba($primary, 1);
+        stroke-width: 5px;
+      }
+    }
+
+    &:hover {
+      border: 1px solid rgba($primary, 0.7);
+
+      svg {
+        stroke: rgba($primary, 0.7);
+      }
+    }
   }
 
   &__summary {
+    display: flex;
+    justify-content: space-between;
     padding: 20px;
-    width: 300px;
     margin-left: auto;
     border: 1px solid $border;
+    border-top: none;
+    margin-bottom: 30px;
+
+    .cart-view__cell {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      grid-gap: 8px;
+      align-items: center;
+    }
+  }
+
+  &__link {
+    @include baseButton;
+
+    & + .cart-view__link {
+      margin-left: 16px;
+    }
+  }
+
+  &__empty {
+    text-align: center;
   }
 }
 </style>

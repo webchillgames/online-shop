@@ -59,6 +59,8 @@ export default defineComponent({
 
 <style lang="scss">
 .home-view {
+  @include page;
+  
   &__products {
     @include productsGrid;
   }

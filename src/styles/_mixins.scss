@@ -53,3 +53,27 @@
     cursor: pointer;
     transition: all 0.2s;
 }
+
+@mixin page {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+@mixin baseButton {
+    border: 1px solid $border;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 16px;
+    color: $font;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    display: inline-block;
+    vertical-align: baseline;
+
+    &:hover {
+        color: #fff;
+        background-color: $primary;
+    }
+}
