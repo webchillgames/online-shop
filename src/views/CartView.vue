@@ -13,10 +13,10 @@
             </div>
 
             <div class="cart-view__cell">
-              <div class="cart-view__quantity">
-                <CButton title="+"></CButton>
-                <p>1</p>
-                <CButton title="-"></CButton>
+              <div class="cart-view__quantity" @click="(e) => editQuantity(e, v.id)">
+                <CButton title="+" value="+"></CButton>
+                <p class="js-item-quantity" :value="v.quantity">{{ v.quantity }}</p>
+                <CButton title="-" value="-"></CButton>
               </div>
             </div>
 
@@ -65,36 +65,54 @@ import CLink from '@/components/CLink.vue'
 import { storeToRefs } from 'pinia'
 import CImage from '@/components/CImage.vue'
 import CIcon from '@/components/CIcon.vue'
-import type { IProduct } from '@/interfaces'
+// import type { IProduct } from '@/interfaces'
 
 export default defineComponent({
   components: { CButton, CLink, CImage, CIcon },
   setup() {
     const cartStore = useCartStore()
-    const { items } = storeToRefs(cartStore)
-    const { removeFromCart } = cartStore
-    const summaryPrice = ref(0)
+    const { items, summaryPrice } = storeToRefs(cartStore)
+    const { removeFromCart, editItemQuantity } = cartStore
+    // const summaryPrice = ref(0)
 
-    function setSummaryPrice(): number {
-      let result: number = 0
+    // function setSummaryPrice(): number {
+    //   let result: number = 0
 
-      items.value.forEach((v: IProduct) => {
-        result += v.price.actual
-      })
+    //   items.value.forEach((v: IProduct) => {
+    //     result += v.price.actual
+    //   })
 
-      return result
+    //   return result
+    // }
+
+    function editQuantity(event: Event, id: number) {
+      const target = event.target as HTMLElement
+      const button = target.closest('button')
+      const sign = button?.getAttribute('value')
+      const parentWrapper = event.currentTarget as HTMLElement
+      const previousQuantity = parentWrapper
+        .querySelector('.js-item-quantity')
+        ?.getAttribute('value')
+
+      if (sign === '+') {
+        const v = Number(previousQuantity) + 1
+        editItemQuantity(id, v)
+      } else if (sign === '-' && Number(previousQuantity) >= 2) {
+        editItemQuantity(id, Number(previousQuantity) - 1)
+      } else if (sign === '-' && Number(previousQuantity) === 1) {
+        return
+      }
     }
 
     onMounted(() => {
-      summaryPrice.value = setSummaryPrice()
-      console.log(items.value);
-      
+      // summaryPrice.value = setSummaryPrice()
     })
 
     return {
       items,
       summaryPrice,
-      removeFromCart
+      removeFromCart,
+      editQuantity
     }
   }
 })

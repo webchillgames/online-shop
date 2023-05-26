@@ -9,21 +9,24 @@ export const useCartStore = defineStore('cart', {
   }),
   getters: {
     summaryPrice: (state) => {
-      let result: number = 0
+      if (state.items) {
+        const result = state.items.reduce((acc: IProduct, next: IProduct) => {
+          const {price, quantity} = next
+          const n: number = price.actual * quantity
+          
+          return acc + n
+        }, 0)
 
-      if (state.items.length) {
-        state.items.forEach((v: IProduct) => {
-          result += v.price.actual
-        })
+        return result
       }
-
-      return result
     },
     itemsQuantity: (state) => state.items.length
   },
   actions: {
     addToCart(item: IProduct): void {
       const previousCart = customStorage.get('user-cart')
+      const modalStore = useMiniModalsStore()
+      const { showMiniModal } = modalStore
 
       let data: IProduct[] = []
 
@@ -37,6 +40,8 @@ export const useCartStore = defineStore('cart', {
 
         if (inPreviousCart.length) {
           item.quantity += 1
+        } else {
+          item.quantity = 1
         }
 
         data = [...previousCart.filter((v: IProduct) => v.id !== item.id)]
@@ -45,12 +50,28 @@ export const useCartStore = defineStore('cart', {
 
       this.items = data
       customStorage.set('user-cart', this.items)
+
+      showMiniModal(`Product added to Cart ${item.title}`, 'success')
     },
     removeFromCart(id: number) {
-      const items = customStorage.get('user-cart')
-      const filteredItems = items.filter((v: IProduct) => v.id !== id)
-      customStorage.set('user-cart', filteredItems)
-      location.reload()
+      const previousCart = customStorage.get('user-cart')
+      const filteredItems = previousCart.filter((v: IProduct) => v.id !== id)
+      this.items = filteredItems
+      customStorage.set('user-cart', this.items)
+    },
+    editItemQuantity(id: number, quantity: number) {
+      const previousCart = customStorage.get('user-cart')
+
+      const edited = previousCart.map((v: IProduct) => {
+        if (v.id === id) {
+          v.quantity = quantity
+        }
+
+        return v
+      })
+
+      this.items = edited
+      customStorage.set('user-cart', this.items)
     }
   }
 })
