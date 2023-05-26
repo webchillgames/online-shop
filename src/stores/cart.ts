@@ -10,11 +10,8 @@ export const useCartStore = defineStore('cart', {
   getters: {
     summaryPrice: (state) => {
       if (state.items) {
-        const result = state.items.reduce((acc: IProduct, next: IProduct) => {
-          const {price, quantity} = next
-          const n: number = price.actual * quantity
-          
-          return acc + n
+        const result = state.items.reduce((acc: number, v: IProduct) => {
+          return acc + v.price.actual * v.quantity
         }, 0)
 
         return result

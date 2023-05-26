@@ -58,14 +58,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { useCartStore } from '../stores/cart'
 import CButton from '@/components/CButton.vue'
 import CLink from '@/components/CLink.vue'
 import { storeToRefs } from 'pinia'
 import CImage from '@/components/CImage.vue'
 import CIcon from '@/components/CIcon.vue'
-// import type { IProduct } from '@/interfaces'
 
 export default defineComponent({
   components: { CButton, CLink, CImage, CIcon },
@@ -73,17 +72,6 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { items, summaryPrice } = storeToRefs(cartStore)
     const { removeFromCart, editItemQuantity } = cartStore
-    // const summaryPrice = ref(0)
-
-    // function setSummaryPrice(): number {
-    //   let result: number = 0
-
-    //   items.value.forEach((v: IProduct) => {
-    //     result += v.price.actual
-    //   })
-
-    //   return result
-    // }
 
     function editQuantity(event: Event, id: number) {
       const target = event.target as HTMLElement
@@ -104,9 +92,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      // summaryPrice.value = setSummaryPrice()
-    })
 
     return {
       items,
