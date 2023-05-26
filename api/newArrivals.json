@@ -47,14 +47,8 @@
             "image": "images/product-item-3.jpg",
             "isAvailable": true,
             "price": {
-                "eur": {
-                    "actual": 45,
-                    "old": 65
-                },
-                "rub": {
-                    "actual": 145,
-                    "old": 165
-                }
+                "actual": 45,
+                "old": 65
             },
             "reviews": 3,
             "stars": 5,
@@ -71,14 +65,8 @@
             "image": "images/product-item-4.jpg",
             "isAvailable": true,
             "price": {
-                "eur": {
-                    "actual": 45,
-                    "old": 65
-                },
-                "rub": {
-                    "actual": 145,
-                    "old": 165
-                }
+                "actual": 45,
+                "old": 65
             },
             "reviews": 3,
             "stars": 5,
