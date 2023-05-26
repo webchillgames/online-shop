@@ -37,23 +37,11 @@ export const useCartStore = defineStore('cart', {
 
         if (inPreviousCart.length) {
           item.quantity += 1
-
-          data = []
         }
+
+        data = [...previousCart.filter((v: IProduct) => v.id !== item.id)]
+        data.push(item)
       }
-
-      // } else if (previousCart && inPreviousCart && inPreviousCart.length) {
-      //   // console.log(inPreviousCart[0]);
-
-      //   // inPreviousCart[0].quantity += 1
-
-      //   // console.log(2, inPreviousCart[0].quantity)
-      //   // data = [...previousCart.filter((v: IProduct) => v.id !== item.id), ...inPreviousCart[0]]
-
-      // } else if (previousCart && !inPreviousCart.length) {
-      //   data = [...previousCart]
-      //   data.push(item)
-      // }
 
       this.items = data
       customStorage.set('user-cart', this.items)
